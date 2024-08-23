@@ -1,5 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
+//TODO: export this to use in addToCart
+
 // Write a test
 test('Login successfully', async({page}) =>{
     // Go to URL
