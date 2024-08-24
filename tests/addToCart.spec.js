@@ -26,9 +26,6 @@ test.beforeEach(async ({ page }) => {
 
 
 test('Add item to cart successfully', async({page}) =>{
-    // Go to URL
-//     await page.goto('https://www.amazon.com/');
-  
 
 
 await page.locator('.inventory_item_description')
@@ -37,5 +34,20 @@ await page.locator('.inventory_item_description')
     .click();
 
     await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+
+    
+    await page.locator('.shopping_cart_badge').click();
+    //assert Fleece is in cart
+
+    const inventoryItem = await page.locator('.inventory_item_name');
+    await expect(inventoryItem).toHaveText('Sauce Labs Fleece Jacket');
+
+    //MENTOR:is it best practices to inlcude this line?  Is there a cleaner way to write it?
+    await expect(page.getByText('Sauce Labs Fleece Jacket')).toBeVisible();
+
+
+    //assert no other items in cart
+
+    await expect(inventoryItem).toHaveCount(1);
 
 });
