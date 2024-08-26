@@ -1,27 +1,18 @@
 const {test, expect} = require('@playwright/test');
+import { LoginPage } from './pages/login';
 
-//TODO: export this to use in addToCart
+const user1 = {
+    username: 'standard_user',
+    password: 'secret_sauce'
+}
 
-// Write a test
-test('Login successfully', async({page}) =>{
-    // Go to URL
-    await page.goto('https://www.saucedemo.com/');
-  
-    // await page.getByRole('input', { name: 'username', exact: true }).click();
-    await page.getByPlaceholder('Username').click();
-    await page.getByPlaceholder('Username').fill('standard_user');
+test('Login success', async({page}) =>{
 
-    await page.getByPlaceholder('Password').fill('secret_sauce');
-
-    await page.locator("[type=submit]").click();
-
-    //await page.locator('button:text("Login")').click();
-
+    const loginPage = new LoginPage(page);
+    const { password, username } = user1
+    await loginPage.goToUrl();
+    await loginPage.login(username, password);
     await expect(page).toHaveTitle('Swag Labs');
-
-   
-
-    await page.waitForTimeout(5000);
 
 })
 
