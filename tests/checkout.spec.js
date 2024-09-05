@@ -1,5 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
+import { CatalogPage } from './pages/catalogPage';
+
 
 test.beforeEach(async ({ page }) => {
 
@@ -23,10 +25,14 @@ test.beforeEach(async ({ page }) => {
     await page.waitForTimeout(5000);
 
     //add item to cart
-    await page.locator('.inventory_item_description')
-.filter({ hasText: 'Sauce Labs Fleece Jacket' })
-    .getByRole('button', { name: 'Add to cart' })
-    .click();
+//     await page.locator('.inventory_item_description')
+// .filter({ hasText: 'Sauce Labs Fleece Jacket' })
+//     .getByRole('button', { name: 'Add to cart' })
+//     .click();
+
+
+const Catalog = new CatalogPage(page);
+await Catalog.addToCart('Sauce Labs Fleece Jacket');
 
     await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
 
